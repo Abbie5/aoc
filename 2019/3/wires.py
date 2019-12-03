@@ -28,15 +28,18 @@ class Line:
         """Get the direction of the line"""
         if self.start.x == self.end.x:
             return Direction.Y
+
         elif self.start.y == self.end.y:
             return Direction.X
+
         else:
-            raise ValueError("Line must be ortholinear")
+            raise ValueError(f"Line is not on the grid")
 
     def get_length(self):
         """Get the length of a line. This is easy since lines are always parallel to the x- or y-axis"""
         if self.get_direction() == Direction.X:
             return abs(self.end.x - self.start.x)
+
         elif self.get_direction() == Direction.Y:
             return abs(self.end.y - self.start.y)
 
@@ -56,6 +59,7 @@ class Intersect:
         if are_parallel(line1, line2):
             return result
 
+        # this code is messy, i know ;_;
         if line1.get_direction() == Direction.X:
             if (
                     (
@@ -93,18 +97,23 @@ def manhattan_distance(start, end):
     return abs(end.x - start.x) + abs(end.y - start.y)
 
 def parse(_file):
-    wires = [s.split(",") for s in _file.read().splitlines()]
+    """Parse a file into a list of wires (lists of lines)"""
+    wires_raw = [line.split(",") for line in _file.read().splitlines()]
+    num_wires = 2 # assumed
 
-    points = [[Coordinate(0,0)], [Coordinate(0,0)]]
+    origin = Coordinate(0,0)
 
-    # construct points array
-    for i in range(len(points)):
-        current_coordinate = Coordinate(0,0)
-        wire = wires[i]
+    # construct wires array
+    wires = [[], []]
+    for wire_index in range(num_wires):
+        current_coordinate = copy(origin)
+        wire_raw = wires_raw[wire_index]
 
-        for movement in wire:
+        for movement in wire_raw:
             direction = movement[0]
             length = int(movement[1:])
+
+            prev_coordinate = copy(current_coordinate)
 
             if direction == "R":
                 current_coordinate.x += length
@@ -117,19 +126,11 @@ def parse(_file):
             else:
                 raise ValueError("Invalid direction")
 
-            points[i].append(copy(current_coordinate))
+            line = Line(copy(prev_coordinate), copy(current_coordinate))
+            wires[wire_index].append(copy(line))
 
-    # construct lines
-    lines = [[],[]]
-    for j in range(len(points)):
-        wire = points[j]
-        for k in range(len(wire) - 1):
-            start, end = wire[k], wire[k+1]
-            lines[j].append(copy(Line(start, end)))
+    return wires
 
-    return lines
-
-# find the intersects between two wires
 def find_intersects(wire1, wire2):
     """Find all intersections between two wires"""
     intersects = []
