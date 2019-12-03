@@ -1,17 +1,28 @@
+from enum import IntEnum
+
+class Opcode(IntEnum):
+    ADD = 1
+    MUL = 2
+    END = 99
+
 def compute(program):
     pointer = 0
 
     while True:
         opcode = program[pointer]
-        if opcode == 1:
-            program[program[pointer + 3]] = program[program[pointer + 1]] + program[program[pointer + 2]]
-            pointer = pointer + 4
-        elif opcode == 2:
-            program[program[pointer + 3]] = program[program[pointer + 1]] * program[program[pointer + 2]]
-            pointer = pointer + 4
-        elif opcode == 99:
+        noun = program[pointer + 1]
+        verb = program[pointer + 2]
+        result = program[pointer + 3]
+
+        if opcode == Opcode.ADD:
+            program[result] = program[noun] + program[verb]
+        elif opcode == Opcode.MUL:
+            program[result] = program[noun] * program[verb]
+        elif opcode == Opcode.END:
             break
         else:
             raise ValueError("Invalid opcode")
+
+        pointer += 4
 
     return program[0]
