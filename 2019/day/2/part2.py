@@ -3,18 +3,8 @@
 import intcode
 from copy import copy
 
-with open("2.input", "r") as f:
+with open("input", "r") as f:
     program = list(map(int, f.read().split(",")))
-
-# part 1
-
-program_modified = copy(program)
-program_modified[1] = 12
-program_modified[2] = 2
-
-print(intcode.compute(program_modified))
-
-# part 2
 
 def find_input(desired_result, initial_program):
     for noun in range(0,100):
