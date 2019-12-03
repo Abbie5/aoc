@@ -1,9 +1,27 @@
 #!/usr/bin/env python3
 
-from wires import parse, Direction, Coordinate, find_intersects
+from wires import parse, find_intersects, Coordinate, Direction, manhattan_distance
 
-with open("input", "r") as f:
+with open("3.input", "r") as f:
     wires = parse(f)
+
+# part 1
+
+origin = Coordinate(0,0)
+wire1 = wires[0]
+wire2 = wires[1]
+intersects = find_intersects(wire1, wire2)
+
+least_distance = None
+for intersect in intersects:
+    coordinate = intersect.get_coordinate()
+    distance = manhattan_distance(origin, coordinate)
+    if (least_distance == None) or (distance < least_distance):
+        least_distance = distance
+
+print(least_distance)
+
+# part 2
 
 def on_line(coordinate, line):
     result = False
@@ -39,11 +57,6 @@ def least_steps_to(origin, coordinate, wire):
 
         else:
             steps += line.get_length()
-
-origin = Coordinate(0,0)
-wire1 = wires[0]
-wire2 = wires[1]
-intersects = find_intersects(wire1, wire2)
 
 least_total_steps = None
 for intersect in intersects:

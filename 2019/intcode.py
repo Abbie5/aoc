@@ -6,6 +6,7 @@ class Opcode(IntEnum):
     END = 99
 
 def compute(program):
+    """Process Intcode program and return value in index 0"""
     pointer = 0
 
     while True:
