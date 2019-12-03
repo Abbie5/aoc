@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 def compute(program):
     pointer = 0
 
