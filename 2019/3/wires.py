@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 from copy import copy
 
 class Coordinate:
@@ -10,8 +10,8 @@ class Coordinate:
         return f"({self.x},{self.y})"
 
 class Direction(Enum):
-    X = 0
-    Y = 1
+    X = auto()
+    Y = auto()
 
 class Line:
     def __init__(self, start, end):
