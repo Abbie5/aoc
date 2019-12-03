@@ -2,6 +2,7 @@ from enum import Enum, auto
 from copy import copy
 
 class Coordinate:
+    """Represents a point in 2D space"""
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -10,15 +11,18 @@ class Coordinate:
         return f"({self.x},{self.y})"
 
 class Direction(Enum):
+    """Whether a line is parallel to the x-axis or the y-axis"""
     X = auto()
     Y = auto()
 
 class Line:
+    """Really a line segment, starts and ends at specified coordinates (has a direction)"""
     def __init__(self, start, end):
         self.start = start
         self.end = end
 
     def get_direction(self):
+        """Get the direction of the line"""
         if self.start.x == self.end.x:
             return Direction.Y
         elif self.start.y == self.end.y:
@@ -27,6 +31,7 @@ class Line:
             raise ValueError("Line must be ortholinear")
 
     def get_length(self):
+        """Get the length of a line. This is easy since lines are always parallel to the x- or y-axis"""
         if self.get_direction() == Direction.X:
             return abs(self.end.x - self.start.x)
         elif self.get_direction() == Direction.Y:
@@ -36,15 +41,18 @@ class Line:
         return f"{self.start.pp()} -> {self.end.pp()}"
 
 class Intersect:
+    """The intersection between two lines. Is not actually calculated until asked for"""
     def __init__(self, line1, line2):
         self.line1 = line1
         self.line2 = line2
 
     def get_coordinate(self):
+        """Get the coordinate of the intersection. Will return None if there is none"""
         result = None
         line1 = self.line1
         line2 = self.line2
 
+        # if the lines are parallel, we don't need to do any more checking
         if are_parallel(line1, line2):
             return result
 
@@ -80,9 +88,11 @@ class Intersect:
         return f"{self.line1.pp()} + {self.line2.pp()} : {self.get_coordinate().pp()}"
 
 def are_parallel(line1, line2):
+    """Test if two lines are parallel"""
     return line1.get_direction() == line2.get_direction()
 
 def manhattan_distance(start, end):
+    """Calculate the Manhattan distance from a start point to an end point"""
     return abs(end.x - start.x) + abs(end.y - start.y)
 
 def parse(_file):
@@ -124,6 +134,7 @@ def parse(_file):
 
 # find the intersects between two wires
 def find_intersects(wire1, wire2):
+    """Find all intersections between two wires"""
     intersects = []
 
     for line1 in wire1:
