@@ -7,7 +7,7 @@ class Coordinate:
         self.x = x
         self.y = y
 
-    def pp(self):
+    def __repr__(self):
         return f"({self.x},{self.y})"
 
 class Direction(Enum):
@@ -20,6 +20,9 @@ class Line:
     def __init__(self, start, end):
         self.start = start
         self.end = end
+
+    def __repr__(self):
+        return f"{self.start} -> {self.end}"
 
     def get_direction(self):
         """Get the direction of the line"""
@@ -36,9 +39,6 @@ class Line:
             return abs(self.end.x - self.start.x)
         elif self.get_direction() == Direction.Y:
             return abs(self.end.y - self.start.y)
-
-    def pp(self):
-        return f"{self.start.pp()} -> {self.end.pp()}"
 
 class Intersect:
     """The intersection between two lines. Is not actually calculated until asked for"""
@@ -83,9 +83,6 @@ class Intersect:
                 result = Coordinate(line1.start.x, line2.start.y)
 
         return result
-
-    def pp(self):
-        return f"{self.line1.pp()} + {self.line2.pp()} : {self.get_coordinate().pp()}"
 
 def are_parallel(line1, line2):
     """Test if two lines are parallel"""
