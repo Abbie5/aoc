@@ -16,10 +16,8 @@ fn main() -> std::io::Result<()> {
         for (index, character) in line.get(0..7).unwrap().chars().enumerate() {
             match character {
                 'F' => continue,
-                'B' => {
-                    row_num += 2i32.pow(6 - index as u32)
-                },
-                _ => panic!("unrecognised character")
+                'B' => row_num += 2i32.pow(6 - index as u32),
+                _ => panic!("unrecognised character"),
             }
         }
 
@@ -27,10 +25,8 @@ fn main() -> std::io::Result<()> {
         for (index, character) in line.get(7..10).unwrap().chars().enumerate() {
             match character {
                 'L' => continue,
-                'R' => {
-                    col_num += 2i32.pow(2 - index as u32)
-                },
-                _ => panic!("unrecognised character")
+                'R' => col_num += 2i32.pow(2 - index as u32),
+                _ => panic!("unrecognised character"),
             }
         }
 
@@ -38,10 +34,9 @@ fn main() -> std::io::Result<()> {
         //println!("{} {}", line, seat_id);
         if seat_id > max_id {
             max_id = seat_id
-        } 
+        }
 
         missing_ids.retain(|&x| x != seat_id);
-
     }
 
     println!("{}", max_id);
@@ -49,7 +44,6 @@ fn main() -> std::io::Result<()> {
         print!("{},", missing_id);
     }
     println!();
-
 
     Ok(())
 }

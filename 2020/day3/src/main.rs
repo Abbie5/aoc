@@ -6,8 +6,8 @@ fn main() -> std::io::Result<()> {
     let reader = BufReader::new(input_file);
     let lines = reader.lines();
 
-    let     angles: [(i32, i32); 5] = [(1,1), (3,1), (5,1), (7,1), (1,2)];
-    let mut totals: [i32       ; 5] = [0    , 0    , 0    , 0    , 0    ];
+    let angles: [(i32, i32); 5] = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
+    let mut totals: [i32; 5] = [0, 0, 0, 0, 0];
 
     let map: Vec<Vec<char>> = lines.map(|l| l.unwrap().chars().collect()).collect();
 
@@ -29,7 +29,7 @@ fn main() -> std::io::Result<()> {
                     totals[index] += 1;
                 }
             }
-        }   
+        }
     }
 
     println!("{}", totals[1]);
