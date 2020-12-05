@@ -22,7 +22,7 @@ fn main() -> std::io::Result<()> {
 
         let count = password.matches(letter).count() as i32;
         if (count >= min) && (count <= max) {
-            total_part1 = total_part2 + 1;
+            total_part1 = total_part1 + 1;
         }
 
         let pos1 = min as usize;

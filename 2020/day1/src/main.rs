@@ -9,6 +9,20 @@ fn main() -> std::io::Result<()> {
 
     for (index1, line1) in lines.iter().enumerate() {
         for (index2, line2) in lines.iter().enumerate() {
+            if index1 <= index2 {
+                continue;
+            }
+            let sum = line1 + line2;
+            if sum == 2020 {
+                let product = line1 * line2;
+                println!("{}", product);
+            }
+            
+        }
+    }
+
+    for (index1, line1) in lines.iter().enumerate() {
+        for (index2, line2) in lines.iter().enumerate() {
             for (index3, line3) in lines.iter().enumerate() {
                 if (index1 <= index2) || (index2 <= index3) || (index1 <= index3) {
                     continue;
@@ -21,7 +35,6 @@ fn main() -> std::io::Result<()> {
             }
         }
     }
-    
 
     Ok(())
 }
