@@ -35,7 +35,10 @@ fn main() -> std::io::Result<()> {
     validators.insert("cid", |_| true);
 
     let _passports = fs::read_to_string("input.txt")?;
-    let passports = _passports.split("\n\n").map(|s| s.replace("\n", " "));
+    let passports = _passports
+        .trim()
+        .split("\n\n")
+        .map(|s| s.replace("\n", " "));
 
     let mut total_part1 = 0;
     let mut total_part2 = 0;
@@ -43,11 +46,8 @@ fn main() -> std::io::Result<()> {
         let mut all_required_fields_present = true;
         let mut all_required_fields_valid = true;
 
-        let passport_dict: HashMap<&str, &str> = passport
-            .trim()
-            .split(" ")
-            .map(|s| (&s[..3], &s[4..]))
-            .collect();
+        let passport_dict: HashMap<&str, &str> =
+            passport.split(" ").map(|s| (&s[..3], &s[4..])).collect();
 
         for required_field in required_fields.iter() {
             if !passport_dict.contains_key(required_field) {

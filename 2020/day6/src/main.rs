@@ -3,10 +3,7 @@ use std::fs;
 
 fn main() -> std::io::Result<()> {
     let _answers = fs::read_to_string("input.txt")?;
-    let answers = _answers
-        .split("\n\n")
-        .map(|s| s.trim())
-        .collect::<Vec<&str>>();
+    let answers = _answers.trim().split("\n\n").collect::<Vec<&str>>();
 
     let total_part1 = answers
         .iter()
