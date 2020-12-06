@@ -13,26 +13,16 @@ fn main() -> std::io::Result<()> {
     for line in lines {
         let line = line.unwrap();
 
-        let mut row_num = 0;
-        for (index, character) in line.get(0..7).unwrap().chars().enumerate() {
-            match character {
-                'F' => continue,
-                'B' => row_num += 2i32.pow(6 - index as u32),
-                _ => panic!("unrecognised character"),
-            }
-        }
+        let seat_id = i32::from_str_radix(
+            line.replace("F", "0")
+                .replace("B", "1")
+                .replace("L", "0")
+                .replace("R", "1")
+                .as_str(),
+            2,
+        )
+        .unwrap();
 
-        let mut col_num = 0;
-        for (index, character) in line.get(7..10).unwrap().chars().enumerate() {
-            match character {
-                'L' => continue,
-                'R' => col_num += 2i32.pow(2 - index as u32),
-                _ => panic!("unrecognised character"),
-            }
-        }
-
-        let seat_id = row_num * 8 + col_num;
-        //println!("{} {}", line, seat_id);
         if seat_id > max_id {
             max_id = seat_id
         }
